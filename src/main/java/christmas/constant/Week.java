@@ -1,5 +1,6 @@
 package christmas.constant;
 
+import christmas.validation.Validation;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,13 +30,7 @@ public enum Week {
     }
 
     public static Week findDay(int date) {
-        validateDate(date);
+        Validation.validateDate(date);
         return Week.valueOf(WeekBundle.get(date % 7));
-    }
-
-    private static void validateDate(int date) throws IllegalArgumentException {
-        if (date < 0 || date > 31) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.getMessage());
-        }
     }
 }

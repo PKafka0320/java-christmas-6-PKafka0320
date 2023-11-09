@@ -1,5 +1,10 @@
 package christmas.constant;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public enum Beverage {
 
     ZERO_COKE("제로콜라", 3_000),
@@ -8,6 +13,9 @@ public enum Beverage {
 
     private final String name;
     private final int price;
+    private static final Map<String, String> dessertBundle = Collections.unmodifiableMap(
+            Stream.of(values()).collect(Collectors.toMap(Beverage::getName, Beverage::name))
+    );
 
     Beverage(String name, int price) {
         this.name = name;
@@ -20,5 +28,13 @@ public enum Beverage {
 
     public int getPrice() {
         return this.price;
+    }
+
+    public static Beverage findBeverage(String name) throws NullPointerException {
+        try {
+            return Beverage.valueOf(dessertBundle.get(name));
+        } catch (NullPointerException e) {
+            throw new NullPointerException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
     }
 }

@@ -28,7 +28,9 @@ class WeekTest {
         // then
         assertThat(result1).as("case1").isEqualTo(Week.FRIDAY);
         assertThat(result2).as("case2").isEqualTo(Week.FRIDAY);
-        assertThat(result3).as("case3").isInstanceOf(IllegalArgumentException.class);
-        assertThat(result4).as("case4").isInstanceOf(IllegalArgumentException.class);
+        assertThat(result3).as("case3").isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        assertThat(result4).as("case4").isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
     }
 }

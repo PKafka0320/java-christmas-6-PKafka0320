@@ -35,7 +35,7 @@ public enum Week {
 
     private static void validateDate(int date) throws IllegalArgumentException {
         if (date < 0 || date > 31) {
-            throw new IllegalArgumentException(String.valueOf(ErrorMessage.INVALID_DATE));
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.getMessage());
         }
     }
 }

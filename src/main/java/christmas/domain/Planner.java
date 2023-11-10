@@ -53,6 +53,7 @@ public class Planner {
     }
 
     public void setMenu(Map<String, Integer> orders) throws IllegalArgumentException {
+        System.out.println(orders);
         int menuCount = 0;
         for (String menu : orders.keySet()) {
             int count = 0;
@@ -78,5 +79,12 @@ public class Planner {
         totalPrice += beverageOrder.totalPrice();
         totalPrice += dessertOrder.totalPrice();
         totalPrice += mainOrder.totalPrice();
+    }
+
+    public void clearOrder() {
+        appetizerOrder.clear();
+        beverageOrder.clear();
+        dessertOrder.clear();
+        mainOrder.clear();
     }
 }

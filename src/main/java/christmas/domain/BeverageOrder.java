@@ -47,4 +47,8 @@ public class BeverageOrder {
     public boolean isEmpty() {
         return order.isEmpty();
     }
+
+    public void clear() {
+        order.clear();
+    }
 }

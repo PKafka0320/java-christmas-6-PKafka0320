@@ -24,6 +24,7 @@ public class Controller {
                 return;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+                planner.clearOrder();
             }
         }
     }

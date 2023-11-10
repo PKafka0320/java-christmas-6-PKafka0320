@@ -47,4 +47,8 @@ public class MainOrder {
     public boolean isEmpty() {
         return order.isEmpty();
     }
+
+    public void clear() {
+        order.clear();
+    }
 }

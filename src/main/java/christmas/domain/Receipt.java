@@ -5,6 +5,7 @@ import christmas.constant.Badge;
 import christmas.constant.Benefit;
 import christmas.constant.Beverage;
 import christmas.constant.Dessert;
+import christmas.constant.ErrorMessage;
 import christmas.constant.Main;
 import christmas.constant.Week;
 import christmas.validation.Validation;
@@ -28,6 +29,63 @@ public class Receipt {
     public void setDate(int date) {
         Validation.validateDate(date);
         this.date = date;
+    }
+
+    public void setMenu(Map<String, Integer> orders) throws IllegalArgumentException {
+        int menuCount = 0;
+        for (String menu : orders.keySet()) {
+            int count = 0;
+            count += checkAppetizer(orders, menu);
+            count += checkBeverage(orders, menu);
+            count += checkDessert(orders, menu);
+            count += checkMain(orders, menu);
+            if (count == 0) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+            }
+        }
+
+        Validation.validateMenuCount(menuCount);
+        Validation.validateOnlyBeverage(appetizerOrder, dessertOrder, mainOrder);
+    }
+
+    private int checkMain(Map<String, Integer> orders, String menu) {
+        int count = 0;
+        Main main = Main.findMain(menu);
+        if (main != null) {
+            mainOrder.put(main, orders.get(menu));
+            count++;
+        }
+        return count;
+    }
+
+    private int checkDessert(Map<String, Integer> orders, String menu) {
+        int count = 0;
+        Dessert dessert = Dessert.findDessert(menu);
+        if (dessert != null) {
+            dessertOrder.put(dessert, orders.get(menu));
+            count++;
+        }
+        return count;
+    }
+
+    private int checkBeverage(Map<String, Integer> orders, String menu) {
+        int count = 0;
+        Beverage beverage = Beverage.findBeverage(menu);
+        if (beverage != null) {
+            beverageOrder.put(beverage, orders.get(menu));
+            count++;
+        }
+        return count;
+    }
+
+    private int checkAppetizer(Map<String, Integer> orders, String menu) {
+        int count = 0;
+        Appetizer appetizer = Appetizer.findAppetizer(menu);
+        if (appetizer != null) {
+            appetizerOrder.put(appetizer, orders.get(menu));
+            count++;
+        }
+        return count;
     }
 
     public void calculateTotalPrice() {

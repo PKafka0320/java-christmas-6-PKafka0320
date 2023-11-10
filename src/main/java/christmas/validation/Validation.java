@@ -20,9 +20,21 @@ public class Validation {
         }
     }
 
+    public static void validateOrderCount(int orderCount) throws IllegalArgumentException {
+        if (orderCount < 1) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+    }
+
     public static void validateOnlyBeverage(Map<Appetizer, Integer> appetizerOrder,
             Map<Dessert, Integer> dessertOrder, Map<Main, Integer> mainOrder) throws IllegalArgumentException {
         if (appetizerOrder.isEmpty() && dessertOrder.isEmpty() && mainOrder.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+    }
+
+    public static void validateOrderFormat(String[] singleOrder) {
+        if (singleOrder.length != 2) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }
     }

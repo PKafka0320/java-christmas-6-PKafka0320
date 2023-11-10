@@ -39,11 +39,8 @@ public class Receipt {
             count += checkBeverage(orders, menu);
             count += checkDessert(orders, menu);
             count += checkMain(orders, menu);
-            if (count == 0) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
-            }
+            Validation.validateOrderCount(count);
         }
-
         Validation.validateMenuCount(menuCount);
         Validation.validateOnlyBeverage(appetizerOrder, dessertOrder, mainOrder);
     }

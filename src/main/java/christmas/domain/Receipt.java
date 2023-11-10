@@ -5,10 +5,10 @@ import christmas.constant.Badge;
 import christmas.constant.Benefit;
 import christmas.constant.Beverage;
 import christmas.constant.Dessert;
-import christmas.constant.ErrorMessage;
 import christmas.constant.Main;
 import christmas.constant.Week;
 import christmas.validation.Validation;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +26,46 @@ public class Receipt {
     Map<Main, Integer> mainOrder = new HashMap<>();
     Map<Benefit, Integer> benefitAmount = new HashMap<>();
 
+    public Map<Appetizer, Integer> getAppetizerOrder() {
+        return Collections.unmodifiableMap(this.appetizerOrder);
+    }
+
+    public Map<Beverage, Integer> getBeverageOrder() {
+        return Collections.unmodifiableMap(this.beverageOrder);
+    }
+
+    public Map<Dessert, Integer> getDessertOrder() {
+        return Collections.unmodifiableMap(this.dessertOrder);
+    }
+
+    public Map<Main, Integer> getMainOrder() {
+        return Collections.unmodifiableMap(this.mainOrder);
+    }
+
+    public Map<Benefit, Integer> getBenefitAmount() {
+        return Collections.unmodifiableMap(this.benefitAmount);
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public int getTotalBenefit() {
+        return totalBenefit;
+    }
+
+    public Badge getBadge() {
+        return badge;
+    }
+
+    public Boolean getEvent() {
+        return event;
+    }
+
     public void setDate(int date) {
         Validation.validateDate(date);
         this.date = date;
@@ -40,6 +80,7 @@ public class Receipt {
             count += checkDessert(orders, menu);
             count += checkMain(orders, menu);
             Validation.validateOrderCount(count);
+            menuCount+= count;
         }
         Validation.validateMenuCount(menuCount);
         Validation.validateOnlyBeverage(appetizerOrder, dessertOrder, mainOrder);
@@ -85,7 +126,12 @@ public class Receipt {
         return count;
     }
 
-    public void calculateTotalPrice() {
+    public void makeResult() {
+        calculateTotalPrice();
+        checkBenefit();
+    }
+
+    private void calculateTotalPrice() {
         for (Appetizer appetizer : appetizerOrder.keySet()) {
             totalPrice += appetizer.getPrice() * appetizerOrder.get(appetizer);
         }
@@ -100,7 +146,7 @@ public class Receipt {
         }
     }
 
-    public void checkBenefit() {
+    private void checkBenefit() {
         if (totalPrice < 10_000) {
             return;
         }
@@ -133,8 +179,8 @@ public class Receipt {
         if (totalPrice >= 120_000) {
             event = true;
             Benefit benefit = Benefit.EVENT;
-            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) - Beverage.CHAMPAGNE.getPrice());
-            totalBenefit -= Beverage.CHAMPAGNE.getPrice();
+            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) + Beverage.CHAMPAGNE.getPrice());
+            totalBenefit += Beverage.CHAMPAGNE.getPrice();
         }
     }
 
@@ -142,8 +188,8 @@ public class Receipt {
         if (date <= 25) {
             Benefit benefit = Benefit.D_DAY;
             int discount = 900 + (date * 100);
-            totalDiscount -= discount;
-            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) - discount);
+            totalDiscount += discount;
+            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) + discount);
         }
     }
 
@@ -151,9 +197,9 @@ public class Receipt {
         if (day != Week.FRIDAY && day != Week.SATURDAY) {
             Benefit benefit = Benefit.WEEKDAY;
             for (Dessert dessert : dessertOrder.keySet()) {
-                int discount = dessertOrder.get(dessert) * 2030;
-                totalDiscount -= discount;
-                benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) - discount);
+                int discount = dessertOrder.get(dessert) * 2023;
+                totalDiscount += discount;
+                benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) + discount);
             }
         }
     }
@@ -162,9 +208,9 @@ public class Receipt {
         if (day == Week.FRIDAY || day == Week.SATURDAY) {
             Benefit benefit = Benefit.WEEKEND;
             for (Main main : mainOrder.keySet()) {
-                int discount = mainOrder.get(main) * 2030;
-                totalDiscount -= discount;
-                benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) - discount);
+                int discount = mainOrder.get(main) * 2023;
+                totalDiscount += discount;
+                benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) + discount);
             }
         }
     }
@@ -173,8 +219,8 @@ public class Receipt {
         if (day == Week.SUNDAY || date == 25) {
             Benefit benefit = Benefit.SPECIAL;
             int discount = 1000;
-            totalDiscount -= discount;
-            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) - discount);
+            totalDiscount += discount;
+            benefitAmount.put(benefit, benefitAmount.getOrDefault(benefit, 0) + discount);
         }
     }
 }

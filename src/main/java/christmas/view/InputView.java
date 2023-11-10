@@ -16,7 +16,7 @@ public class InputView {
             date = Integer.parseInt(Console.readLine());
             Validation.validateDate(date);
         } catch (IllegalArgumentException e) {
-            System.out.println(ErrorMessage.INVALID_DATE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.getMessage());
         }
         return date;
     }

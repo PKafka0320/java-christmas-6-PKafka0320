@@ -16,18 +16,12 @@ class BeverageTest {
 
         // when
         Beverage result1 = Beverage.findBeverage(case1);
-        Throwable result2 = catchThrowable(() -> {
-            Beverage.findBeverage(case2);
-        });
-        Throwable result3 = catchThrowable(() -> {
-            Beverage.findBeverage(case3);
-        });
+        Beverage result2 = Beverage.findBeverage(case2);
+        Beverage result3 = Beverage.findBeverage(case3);
 
         // then
         assertThat(result1).as("case1").isEqualTo(Beverage.CHAMPAGNE);
-        assertThat(result2).as("case2").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        assertThat(result3).as("case3").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        assertThat(result2).as("case2").isEqualTo(null);
+        assertThat(result3).as("case3").isEqualTo(null);
     }
 }

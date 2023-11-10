@@ -31,7 +31,11 @@ public enum Dessert {
 
     public static Dessert findDessert(String name) throws NullPointerException {
         try {
-            return Dessert.valueOf(dessertBundle.get(name));
+            String dessertName = dessertBundle.get(name);
+            if (dessertName == null) {
+                return null;
+            }
+            return Dessert.valueOf(dessertName);
         } catch (NullPointerException e) {
             throw new NullPointerException(ErrorMessage.INVALID_FORMAT.getMessage());
         }

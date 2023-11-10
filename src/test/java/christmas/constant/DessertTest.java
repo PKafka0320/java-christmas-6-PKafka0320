@@ -16,18 +16,12 @@ class DessertTest {
 
         // when
         Dessert result1 = Dessert.findDessert(case1);
-        Throwable result2 = catchThrowable(() -> {
-            Dessert.findDessert(case2);
-        });
-        Throwable result3 = catchThrowable(() -> {
-            Dessert.findDessert(case3);
-        });
+        Dessert result2 = Dessert.findDessert(case2);
+        Dessert result3 = Dessert.findDessert(case3);
 
         // then
         assertThat(result1).as("case1").isEqualTo(Dessert.CHOCO_CAKE);
-        assertThat(result2).as("case2").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        assertThat(result3).as("case3").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        assertThat(result2).as("case2").isEqualTo(null);
+        assertThat(result3).as("case3").isEqualTo(null);
     }
 }

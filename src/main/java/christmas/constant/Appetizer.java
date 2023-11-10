@@ -32,7 +32,11 @@ public enum Appetizer {
 
     public static Appetizer findAppetizer(String name) throws NullPointerException {
         try {
-            return Appetizer.valueOf(appetizerBundle.get(name));
+            String appetizerName = appetizerBundle.get(name);
+            if (appetizerName == null) {
+                return null;
+            }
+            return Appetizer.valueOf(appetizerName);
         } catch (NullPointerException e) {
             throw new NullPointerException(ErrorMessage.INVALID_FORMAT.getMessage());
         }

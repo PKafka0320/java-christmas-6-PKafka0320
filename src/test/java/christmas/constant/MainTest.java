@@ -16,18 +16,12 @@ class MainTest {
 
         // when
         Main result1 = Main.findMain(case1);
-        Throwable result2 = catchThrowable(() -> {
-            Main.findMain(case2);
-        });
-        Throwable result3 = catchThrowable(() -> {
-            Main.findMain(case3);
-        });
+        Main result2 = Main.findMain(case2);
+        Main result3 = Main.findMain(case3);
 
         // then
         assertThat(result1).as("case1").isEqualTo(Main.BBQ_RIB);
-        assertThat(result2).as("case2").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        assertThat(result3).as("case3").isInstanceOf(NullPointerException.class)
-                .hasMessage("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        assertThat(result2).as("case2").isEqualTo(null);
+        assertThat(result3).as("case3").isEqualTo(null);
     }
 }

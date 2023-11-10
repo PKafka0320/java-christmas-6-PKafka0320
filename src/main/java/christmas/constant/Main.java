@@ -32,7 +32,11 @@ public enum Main {
 
     public static Main findMain(String name) throws NullPointerException {
         try {
-            return Main.valueOf(mainBundle.get(name));
+            String mainName = mainBundle.get(name);
+            if (mainName == null) {
+                return null;
+            }
+            return Main.valueOf(mainName);
         } catch (NullPointerException e) {
             throw new NullPointerException(ErrorMessage.INVALID_FORMAT.getMessage());
         }

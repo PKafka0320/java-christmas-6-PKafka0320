@@ -14,18 +14,7 @@ public class Controller {
         askDate();
         askOrder();
         planner.makeResult();
-        showResult();
-    }
-
-    private void showResult() {
-        outputView.showMenu(planner.getAppetizerOrder(), planner.getBeverageOrder(), planner.getDessertOrder(),
-                planner.getMainOrder());
-        outputView.showPriceBeforeDiscount(planner.getTotalPrice());
-        outputView.showEventMenu(planner.getEvent());
-        outputView.showBenefit(planner.getBenefitAmount());
-        outputView.showTotalBenefit(planner.getTotalBenefit());
-        outputView.showPrice(planner.getTotalPrice(), planner.getTotalDiscount());
-        outputView.showBadge(planner.getBadge());
+        outputView.showResult(planner);
     }
 
     private void askOrder() {

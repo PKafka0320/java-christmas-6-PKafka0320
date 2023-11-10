@@ -1,9 +1,9 @@
 package christmas.validation;
 
-import christmas.constant.Appetizer;
-import christmas.constant.Dessert;
 import christmas.constant.ErrorMessage;
-import christmas.constant.Main;
+import christmas.domain.AppetizerOrder;
+import christmas.domain.DessertOrder;
+import christmas.domain.MainOrder;
 import java.util.IllformedLocaleException;
 import java.util.Map;
 
@@ -27,8 +27,8 @@ public class Validation {
         }
     }
 
-    public static void validateOnlyBeverage(Map<Appetizer, Integer> appetizerOrder,
-            Map<Dessert, Integer> dessertOrder, Map<Main, Integer> mainOrder) throws IllegalArgumentException {
+    public static void validateOnlyBeverage(AppetizerOrder appetizerOrder, DessertOrder dessertOrder,
+            MainOrder mainOrder) throws IllegalArgumentException {
         if (appetizerOrder.isEmpty() && dessertOrder.isEmpty() && mainOrder.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }
@@ -40,7 +40,8 @@ public class Validation {
         }
     }
 
-    public static void validateOrderDuplication(Map<String, Integer> order, String menuName) throws IllformedLocaleException {
+    public static void validateOrderDuplication(Map<String, Integer> order, String menuName)
+            throws IllformedLocaleException {
         if (order.containsKey(menuName)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }

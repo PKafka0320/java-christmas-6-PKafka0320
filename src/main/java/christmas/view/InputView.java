@@ -3,7 +3,6 @@ package christmas.view;
 import camp.nextstep.edu.missionutils.Console;
 import christmas.constant.ErrorMessage;
 import christmas.validation.Validation;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

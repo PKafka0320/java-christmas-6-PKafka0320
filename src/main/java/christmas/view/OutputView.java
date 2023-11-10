@@ -6,6 +6,8 @@ import christmas.constant.Benefit;
 import christmas.constant.Beverage;
 import christmas.constant.Dessert;
 import christmas.constant.Main;
+import christmas.domain.BenefitDetail;
+import christmas.domain.Planner;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -13,14 +15,24 @@ public class OutputView {
 
     static DecimalFormat formatter = new DecimalFormat("###,###");
 
-    public void showMenu(Map<Appetizer, Integer> appetizerOrder, Map<Beverage, Integer> beverageOrder,
-            Map<Dessert, Integer> dessertOrder, Map<Main, Integer> mainOrder) {
+    public void showResult(Planner planner) {
+        BenefitDetail benefitDetail = planner.getBenefitDetail();
+        showMenu(planner);
+        showPriceBeforeDiscount(planner.getTotalPrice());
+        showEventMenu(benefitDetail);
+        showBenefit(benefitDetail);
+        showTotalBenefit(benefitDetail);
+        showPrice(planner.getTotalPrice(), benefitDetail.totalDiscount());
+        showBadge(planner.getBadge());
+    }
+
+    private void showMenu(Planner planner) {
         System.out.println("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n");
         System.out.println("<주문 메뉴>");
-        printAppetizer(appetizerOrder);
-        printBeverage(beverageOrder);
-        printDessert(dessertOrder);
-        printMain(mainOrder);
+        printAppetizer(planner.getAppetizerOrder().getOrder());
+        printBeverage(planner.getBeverageOrder().getOrder());
+        printDessert(planner.getDessertOrder().getOrder());
+        printMain(planner.getMainOrder().getOrder());
         System.out.println();
     }
 
@@ -48,15 +60,15 @@ public class OutputView {
         }
     }
 
-    public void showPriceBeforeDiscount(int price) {
+    private void showPriceBeforeDiscount(int price) {
         System.out.println("<할인 전 총주문 금액>");
         System.out.println(formatter.format(price));
         System.out.println();
     }
 
-    public void showEventMenu(boolean event) {
+    private void showEventMenu(BenefitDetail benefitDetail) {
         System.out.println("<증정 메뉴>");
-        if (event) {
+        if (benefitDetail.hasEvent()) {
             System.out.println("샴페인 1개");
             System.out.println();
             return;
@@ -65,34 +77,35 @@ public class OutputView {
         System.out.println();
     }
 
-    public void showBenefit(Map<Benefit, Integer> benefitAmount) {
+    private void showBenefit(BenefitDetail benefitDetail) {
         System.out.println("<혜택 내역>");
-        if (benefitAmount.isEmpty()) {
+        if (benefitDetail.isEmpty()) {
             System.out.println("없음");
             System.out.println();
             return;
         }
-        for (Benefit benefit : benefitAmount.keySet()) {
-            int discount = benefitAmount.get(benefit) * -1;
+        Map<Benefit, Integer> detail = benefitDetail.getDetail();
+        for (Benefit benefit : detail.keySet()) {
+            int discount = detail.get(benefit) * -1;
             System.out.println(benefit.getDescription() + ": " + formatter.format(discount) + "원");
         }
         System.out.println();
     }
 
-    public void showTotalBenefit(int totalBenefit) {
+    private void showTotalBenefit(BenefitDetail benefitDetail) {
         System.out.println("<총혜택 금액>");
-        int discount = totalBenefit * -1;
+        int discount = benefitDetail.totalBenefit() * -1;
         System.out.println(formatter.format(discount) + "원");
         System.out.println();
     }
 
-    public void showPrice(int totalPrice, int totalDiscount) {
+    private void showPrice(int totalPrice, int totalDiscount) {
         System.out.println("<할인 후 예상 결제 금액>");
         System.out.println(formatter.format(totalPrice - totalDiscount));
         System.out.println();
     }
 
-    public void showBadge(Badge badge) {
+    private void showBadge(Badge badge) {
         System.out.println("<12월 이벤트 배지>");
         if (badge == null) {
             System.out.println("없음");

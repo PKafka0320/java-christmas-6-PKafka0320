@@ -17,6 +17,7 @@ public class Receipt {
     private int totalPrice = 0;
     private int totalDiscount = 0;
     private int totalBenefit = 0;
+    private Badge badge = null;
     private Boolean event = false;
     Map<Appetizer, Integer> appetizerOrder = new HashMap<>();
     Map<Beverage, Integer> beverageOrder = new HashMap<>();
@@ -55,6 +56,21 @@ public class Receipt {
         calculateWeekendDiscount(day);
         calculateSpecialDiscount(day);
         checkEvent();
+        checkBadge();
+    }
+
+    private void checkBadge() {
+        if (totalBenefit >= 20_000) {
+            badge = Badge.SANTA;
+            return;
+        }
+        if (totalBenefit >= 10_000) {
+            badge = Badge.TREE;
+            return;
+        }
+        if (totalBenefit >= 5_000) {
+            badge = Badge.STAR;
+        }
     }
 
     private void checkEvent() {

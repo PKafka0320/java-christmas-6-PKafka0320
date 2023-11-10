@@ -5,6 +5,7 @@ import christmas.constant.Badge;
 import christmas.constant.Benefit;
 import christmas.constant.Beverage;
 import christmas.constant.Dessert;
+import christmas.constant.ErrorMessage;
 import christmas.constant.Main;
 import christmas.constant.Week;
 import christmas.validation.Validation;
@@ -12,7 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Receipt {
+public class Planner {
 
     private int date;
     private int totalPrice = 0;
@@ -80,48 +81,48 @@ public class Receipt {
             count += checkDessert(orders, menu);
             count += checkMain(orders, menu);
             Validation.validateOrderCount(count);
-            menuCount+= count;
+            menuCount += count;
         }
         Validation.validateMenuCount(menuCount);
         Validation.validateOnlyBeverage(appetizerOrder, dessertOrder, mainOrder);
     }
 
-    private int checkMain(Map<String, Integer> orders, String menu) {
+    private int checkMain(Map<String, Integer> orders, String menu) throws IllegalArgumentException {
         int count = 0;
         Main main = Main.findMain(menu);
         if (main != null) {
-            mainOrder.put(main, orders.get(menu));
-            count++;
+            count = orders.get(menu);
+            mainOrder.put(main, count);
         }
         return count;
     }
 
-    private int checkDessert(Map<String, Integer> orders, String menu) {
+    private int checkDessert(Map<String, Integer> orders, String menu) throws IllegalArgumentException {
         int count = 0;
         Dessert dessert = Dessert.findDessert(menu);
         if (dessert != null) {
-            dessertOrder.put(dessert, orders.get(menu));
-            count++;
+            count = orders.get(menu);
+            dessertOrder.put(dessert, count);
         }
         return count;
     }
 
-    private int checkBeverage(Map<String, Integer> orders, String menu) {
+    private int checkBeverage(Map<String, Integer> orders, String menu) throws IllegalArgumentException {
         int count = 0;
         Beverage beverage = Beverage.findBeverage(menu);
         if (beverage != null) {
-            beverageOrder.put(beverage, orders.get(menu));
-            count++;
+            count = orders.get(menu);
+            beverageOrder.put(beverage, count);
         }
         return count;
     }
 
-    private int checkAppetizer(Map<String, Integer> orders, String menu) {
+    private int checkAppetizer(Map<String, Integer> orders, String menu) throws IllegalArgumentException {
         int count = 0;
         Appetizer appetizer = Appetizer.findAppetizer(menu);
         if (appetizer != null) {
-            appetizerOrder.put(appetizer, orders.get(menu));
-            count++;
+            count = orders.get(menu);
+            appetizerOrder.put(appetizer, count);
         }
         return count;
     }

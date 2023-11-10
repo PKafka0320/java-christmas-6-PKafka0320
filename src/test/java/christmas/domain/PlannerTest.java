@@ -3,17 +3,16 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import christmas.constant.Week;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ReceiptTest {
+class PlannerTest {
 
-    private Receipt receipt;
+    private Planner planner;
 
     @BeforeEach
     void beforeEach() {
-        receipt = new Receipt();
+        planner = new Planner();
     }
 
     @Test
@@ -26,16 +25,16 @@ class ReceiptTest {
 
         // when
         Throwable result1 = catchThrowable(() -> {
-            receipt.setDate(case1);
+            planner.setDate(case1);
         });
         Throwable result2 = catchThrowable(() -> {
-            receipt.setDate(case2);
+            planner.setDate(case2);
         });
         Throwable result3 = catchThrowable(() -> {
-            receipt.setDate(case3);
+            planner.setDate(case3);
         });
         Throwable result4 = catchThrowable(() -> {
-            receipt.setDate(case4);
+            planner.setDate(case4);
         });
 
         // then

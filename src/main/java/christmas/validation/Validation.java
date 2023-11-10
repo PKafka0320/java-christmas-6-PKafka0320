@@ -4,6 +4,7 @@ import christmas.constant.Appetizer;
 import christmas.constant.Dessert;
 import christmas.constant.ErrorMessage;
 import christmas.constant.Main;
+import java.util.IllformedLocaleException;
 import java.util.Map;
 
 public class Validation {
@@ -35,6 +36,12 @@ public class Validation {
 
     public static void validateOrderFormat(String[] singleOrder) {
         if (singleOrder.length != 2) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
+        }
+    }
+
+    public static void validateOrderDuplication(Map<String, Integer> order, String menuName) throws IllformedLocaleException {
+        if (order.containsKey(menuName)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }
     }

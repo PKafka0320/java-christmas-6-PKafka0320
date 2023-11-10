@@ -36,14 +36,6 @@ public class AppetizerOrder {
         return sum;
     }
 
-    public int quantity() {
-        int totalQuantity = 0;
-        for (int quantity : getOrder().values()) {
-            totalQuantity += quantity;
-        }
-        return totalQuantity;
-    }
-
     public boolean isEmpty() {
         return order.isEmpty();
     }

@@ -15,10 +15,6 @@ public class BenefitDetail {
         return Collections.unmodifiableMap(benefits);
     }
 
-    public void addBenefit(Benefit benefit, int price) {
-        benefits.put(benefit, price);
-    }
-
     public boolean isEmpty() {
         return benefits.isEmpty();
     }

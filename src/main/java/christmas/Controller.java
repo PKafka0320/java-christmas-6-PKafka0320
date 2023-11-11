@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.domain.BenefitDetail;
 import christmas.domain.Planner;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -8,13 +9,16 @@ public class Controller {
 
     InputView inputView = new InputView();
     OutputView outputView = new OutputView();
-    Planner planner = new Planner();
+    Planner planner;
 
     public void run() {
+        BenefitDetail benefitDetail = new BenefitDetail();
+        planner = new Planner(benefitDetail);
+
         askDate();
         askOrder();
         planner.makeResult();
-        outputView.showResult(planner);
+        outputView.showResult(planner, benefitDetail);
     }
 
     private void askOrder() {

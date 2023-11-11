@@ -1,6 +1,10 @@
 package christmas.domain;
 
+import christmas.constant.Appetizer;
 import christmas.constant.Badge;
+import christmas.constant.Beverage;
+import christmas.constant.Dessert;
+import christmas.constant.Main;
 import christmas.validation.Validation;
 import java.util.Map;
 
@@ -13,26 +17,34 @@ public class Planner {
     BeverageOrder beverageOrder = new BeverageOrder();
     DessertOrder dessertOrder = new DessertOrder();
     MainOrder mainOrder = new MainOrder();
-    BenefitDetail benefitDetail = new BenefitDetail();
+    BenefitDetail benefitDetail;
 
-    public AppetizerOrder getAppetizerOrder() {
-        return this.appetizerOrder;
+    public Planner(BenefitDetail benefitDetail) {
+        this.benefitDetail = benefitDetail;
     }
 
-    public BeverageOrder getBeverageOrder() {
-        return this.beverageOrder;
+    public Map<Appetizer, Integer> getAppetizerOrder() {
+        return this.appetizerOrder.getOrder();
     }
 
-    public DessertOrder getDessertOrder() {
-        return this.dessertOrder;
+    public Map<Beverage, Integer> getBeverageOrder() {
+        return this.beverageOrder.getOrder();
     }
 
-    public MainOrder getMainOrder() {
-        return this.mainOrder;
+    public Map<Dessert, Integer> getDessertOrder() {
+        return this.dessertOrder.getOrder();
     }
 
-    public BenefitDetail getBenefitDetail() {
-        return this.benefitDetail;
+    public int getDessertQuantity() {
+        return this.dessertOrder.quantity();
+    }
+
+    public Map<Main, Integer> getMainOrder() {
+        return this.mainOrder.getOrder();
+    }
+
+    public int getMainQuantity() {
+        return this.mainOrder.quantity();
     }
 
     public int getTotalPrice() {

@@ -15,12 +15,11 @@ public class OutputView {
 
     static DecimalFormat formatter = new DecimalFormat("###,###");
 
-    public void showResult(Planner planner) {
-        BenefitDetail benefitDetail = planner.getBenefitDetail();
+    public void showResult(Planner planner, BenefitDetail benefitDetail) {
         showMenu(planner);
         showPriceBeforeDiscount(planner.getTotalPrice());
-        showEventMenu(benefitDetail);
-        showBenefit(benefitDetail);
+        showEventMenu(benefitDetail.hasEvent());
+        showBenefit(benefitDetail.getDetail());
         showTotalBenefit(benefitDetail);
         showPrice(planner.getTotalPrice(), benefitDetail.totalDiscount());
         showBadge(planner.getBadge());
@@ -29,10 +28,10 @@ public class OutputView {
     private void showMenu(Planner planner) {
         System.out.println("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n");
         System.out.println("<주문 메뉴>");
-        printAppetizer(planner.getAppetizerOrder().getOrder());
-        printBeverage(planner.getBeverageOrder().getOrder());
-        printDessert(planner.getDessertOrder().getOrder());
-        printMain(planner.getMainOrder().getOrder());
+        printAppetizer(planner.getAppetizerOrder());
+        printBeverage(planner.getBeverageOrder());
+        printDessert(planner.getDessertOrder());
+        printMain(planner.getMainOrder());
         System.out.println();
     }
 
@@ -66,9 +65,9 @@ public class OutputView {
         System.out.println();
     }
 
-    private void showEventMenu(BenefitDetail benefitDetail) {
+    private void showEventMenu(boolean hasEvent) {
         System.out.println("<증정 메뉴>");
-        if (benefitDetail.hasEvent()) {
+        if (hasEvent) {
             System.out.println("샴페인 1개");
             System.out.println();
             return;
@@ -77,14 +76,13 @@ public class OutputView {
         System.out.println();
     }
 
-    private void showBenefit(BenefitDetail benefitDetail) {
+    private void showBenefit(Map<Benefit, Integer> detail) {
         System.out.println("<혜택 내역>");
-        if (benefitDetail.isEmpty()) {
+        if (detail.isEmpty()) {
             System.out.println("없음");
             System.out.println();
             return;
         }
-        Map<Benefit, Integer> detail = benefitDetail.getDetail();
         for (Benefit benefit : detail.keySet()) {
             int discount = detail.get(benefit) * -1;
             System.out.println(benefit.getDescription() + ": " + formatter.format(discount) + "원");

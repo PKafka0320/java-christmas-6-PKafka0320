@@ -12,7 +12,8 @@ class PlannerTest {
 
     @BeforeEach
     void beforeEach() {
-        planner = new Planner();
+        BenefitDetail benefitDetail = new BenefitDetail();
+        planner = new Planner(benefitDetail);
     }
 
     @Test

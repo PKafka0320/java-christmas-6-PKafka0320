@@ -15,10 +15,6 @@ public class BenefitDetail {
         return Collections.unmodifiableMap(benefits);
     }
 
-    public boolean isEmpty() {
-        return benefits.isEmpty();
-    }
-
     public int totalBenefit() {
         int sum = 0;
         for (Benefit benefit : benefits.keySet()) {
@@ -73,12 +69,12 @@ public class BenefitDetail {
     private void checkWeek(Planner planner, Week day) {
         if (day != Week.FRIDAY && day != Week.SATURDAY) {
             Benefit benefit = Benefit.WEEKDAY;
-            int discount = planner.getDessertOrder().quantity() * 2023;
+            int discount = planner.getDessertQuantity() * 2023;
             benefits.put(benefit, discount);
             return;
         }
         Benefit benefit = Benefit.WEEKEND;
-        int discount = planner.getMainOrder().quantity() * 2023;
+        int discount = planner.getMainQuantity() * 2023;
         benefits.put(benefit, discount);
     }
 

@@ -15,8 +15,8 @@ public class Validation {
         }
     }
 
-    public static void validateMenuCount(int menuCount) throws IllegalArgumentException {
-        if (menuCount < 1 || menuCount > 20) {
+    public static void validateTotalOrderCount(int orderCount) throws IllegalArgumentException {
+        if (orderCount < 1 || orderCount > 20) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_FORMAT.getMessage());
         }
     }

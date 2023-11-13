@@ -31,6 +31,6 @@ public enum Week {
 
     public static Week findDay(int date) {
         Validation.validateDate(date);
-        return Week.valueOf(WeekBundle.get(date % 7));
+        return Week.valueOf(WeekBundle.get(date % values().length));
     }
 }

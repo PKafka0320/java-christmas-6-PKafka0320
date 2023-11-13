@@ -66,8 +66,8 @@ public class Planner {
 
     public void setMenu(Map<String, Integer> orders) throws IllegalArgumentException {
         System.out.println(orders);
-        int menuCount = makeOrder(orders);
-        Validation.validateMenuCount(menuCount);
+        int orderCount = makeOrder(orders);
+        Validation.validateTotalOrderCount(orderCount);
         Validation.validateOnlyBeverage(appetizerOrder, dessertOrder, mainOrder);
     }
 
